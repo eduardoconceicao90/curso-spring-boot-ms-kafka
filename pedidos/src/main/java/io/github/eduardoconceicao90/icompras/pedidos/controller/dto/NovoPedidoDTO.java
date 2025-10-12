@@ -1,4 +1,10 @@
 package io.github.eduardoconceicao90.icompras.pedidos.controller.dto;
 
-public record NovoPedidoDTO() {
+import java.util.List;
+
+public record NovoPedidoDTO(
+        Long codigoCliente,
+        DadosPagamentoDTO dadosPagamento,
+        List<ItemPedidoDTO> itens
+) {
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter @Setter
@@ -42,5 +43,11 @@ public class Pedido {
 
     @Column(name = "url_nf")
     private String urlNotaFiscal;
+
+    @Transient
+    private DadosPagamento dadosPagamento;
+
+    @OneToMany(mappedBy = "codigoPedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ItemPedido> itens;
 
 }

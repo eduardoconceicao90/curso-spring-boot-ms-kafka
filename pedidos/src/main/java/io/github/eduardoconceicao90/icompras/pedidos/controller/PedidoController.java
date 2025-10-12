@@ -1,7 +1,7 @@
 package io.github.eduardoconceicao90.icompras.pedidos.controller;
 
 import io.github.eduardoconceicao90.icompras.pedidos.controller.dto.NovoPedidoDTO;
-import io.github.eduardoconceicao90.icompras.pedidos.model.Pedido;
+import io.github.eduardoconceicao90.icompras.pedidos.controller.mapper.PedidoMapper;
 import io.github.eduardoconceicao90.icompras.pedidos.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class PedidoController {
 
     private final PedidoService service;
+    private final PedidoMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Pedido> criar(@RequestBody NovoPedidoDTO novoPedido) {
-        return null;
+    public ResponseEntity<Object> criar(@RequestBody NovoPedidoDTO novoPedidoDto) {
+        var pedido = service.criar(mapper.toPedido(novoPedidoDto));
+        return ResponseEntity.ok(pedido.getCodigo());
     }
 
 }
