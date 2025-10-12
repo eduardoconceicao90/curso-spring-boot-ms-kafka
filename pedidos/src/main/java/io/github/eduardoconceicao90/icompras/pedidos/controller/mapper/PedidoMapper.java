@@ -38,6 +38,7 @@ public interface PedidoMapper {
         ).reduce(BigDecimal.ZERO, BigDecimal::add).abs();
 
         pedido.setTotal(total);
+        pedido.getItens().forEach(item -> item.setPedido(pedido));
     }
 
 }
