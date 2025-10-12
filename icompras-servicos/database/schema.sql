@@ -23,7 +23,7 @@ create table clientes (
 
 create database icompraspedidos;
 
-create table pedido (
+create table pedidos (
 	codigo serial not null primary key,
 	codigo_cliente bigint not null,
 	data_pedido timestamp not null default now(),
@@ -39,7 +39,7 @@ create table pedido (
 
 create table item_pedido (
 	codigo serial not null primary key,
-	codigo_pedido bigint not null references pedido (codigo),
+	codigo_pedido bigint not null references pedidos (codigo),
 	codigo_produto bigint not null,
 	quantidade int not null,
 	valor_unitario decimal(16,2) not null
