@@ -33,6 +33,13 @@ public interface PedidoMapper {
         pedido.setStatus(StatusPedido.REALIZADO);
         pedido.setDataPedido(LocalDateTime.now());
 
+        /*
+           Calcula o total do pedido:
+           1 - pedido.getItens().stream(): Cria um stream da lista de itens do pedido.
+           2 - .map(item -> item.getValorUnitario().multiply(BigDecimal.valueOf(item.getQuantidade()))): Para cada item, multiplica o valor unitário pela quantidade, resultando no valor total daquele item.
+           3 - .reduce(BigDecimal.ZERO, BigDecimal::add): Soma todos os valores dos itens, começando do zero.
+           4 - .abs(): Garante que o total seja positivo.
+        */
         var total = pedido.getItens().stream().map(item ->
              item.getValorUnitario().multiply(BigDecimal.valueOf(item.getQuantidade()))
         ).reduce(BigDecimal.ZERO, BigDecimal::add).abs();
