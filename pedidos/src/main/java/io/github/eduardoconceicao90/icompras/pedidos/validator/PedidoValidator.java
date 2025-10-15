@@ -5,6 +5,7 @@ import io.github.eduardoconceicao90.icompras.pedidos.client.ClientesClient;
 import io.github.eduardoconceicao90.icompras.pedidos.client.ProdutosClient;
 import io.github.eduardoconceicao90.icompras.pedidos.model.ItemPedido;
 import io.github.eduardoconceicao90.icompras.pedidos.model.Pedido;
+import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,8 @@ public class PedidoValidator {
             var response = clientesClient.obterPorCodigo(codigoCliente).getBody();
             log.info("Cliente com código {} encontrado: {}", response.codigo(), response.nome());
         } catch (FeignException.NotFound e) {
-            throw new IllegalArgumentException("Cliente com código " + codigoCliente + " não encontrado");
+            var message = String.format("Cliente com código %d não encontrado", codigoCliente);
+            throw new ValidationException("codigoCliente", message);
         }
     }
 
@@ -37,7 +39,8 @@ public class PedidoValidator {
             var response = produtosClient.obterPorCodigo(itemPedido.getCodigoProduto()).getBody();
             log.info("Produto com código {} encontrado: {}", response.codigo(), response.nome());
         } catch (FeignException.NotFound e) {
-            throw new IllegalArgumentException("Produto com código " + itemPedido.getCodigoProduto() + " não encontrado");
+            var message = String.format("Produto com código %d não encontrado", itemPedido.getCodigoProduto());
+            throw new ValidationException("codigoProduto", message);
         }
     }
 
