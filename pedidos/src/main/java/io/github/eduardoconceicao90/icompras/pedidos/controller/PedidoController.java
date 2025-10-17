@@ -4,6 +4,7 @@ import io.github.eduardoconceicao90.icompras.pedidos.controller.dto.AdicaoNovoPa
 import io.github.eduardoconceicao90.icompras.pedidos.controller.dto.NovoPedidoDTO;
 import io.github.eduardoconceicao90.icompras.pedidos.controller.mapper.PedidoMapper;
 import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ErrorResponse;
+import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ItemNaoEncontradoException;
 import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ValidationException;
 import io.github.eduardoconceicao90.icompras.pedidos.service.PedidoService;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,9 @@ public class PedidoController {
                     adicaoNovoPagamentoDTO.tipoPagamento()
             );
             return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-
+        } catch (ItemNaoEncontradoException e) {
+            var errorResponse = new ErrorResponse("Pedido não encontrado", "codigoPedido", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
 

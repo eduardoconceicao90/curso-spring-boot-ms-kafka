@@ -5,6 +5,7 @@ import io.github.eduardoconceicao90.icompras.pedidos.model.DadosPagamento;
 import io.github.eduardoconceicao90.icompras.pedidos.model.Pedido;
 import io.github.eduardoconceicao90.icompras.pedidos.model.enums.StatusPedido;
 import io.github.eduardoconceicao90.icompras.pedidos.model.enums.TipoPagamento;
+import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ItemNaoEncontradoException;
 import io.github.eduardoconceicao90.icompras.pedidos.repository.ItemPedidoRepository;
 import io.github.eduardoconceicao90.icompras.pedidos.repository.PedidoRepository;
 import io.github.eduardoconceicao90.icompras.pedidos.validator.PedidoValidator;
@@ -71,9 +72,7 @@ public class PedidoService {
     public void adicionarNovoPagamento(Long codigoPedido, String dados, TipoPagamento tipoPagamento) {
         var pedidoEncontrado = repository.findById(codigoPedido);
         if(pedidoEncontrado.isEmpty()) {
-            var msg = String.format("Pedido com código %d não encontrado", codigoPedido);
-            log.error(msg);
-            return;
+            throw new ItemNaoEncontradoException("Pedido com código " + codigoPedido + " não encontrado.");
         } else {
             var pedido = pedidoEncontrado.get();
 
