@@ -1,5 +1,6 @@
 package io.github.eduardoconceicao90.icompras.pedidos.controller;
 
+import io.github.eduardoconceicao90.icompras.pedidos.controller.dto.AdicaoNovoPagamentoDTO;
 import io.github.eduardoconceicao90.icompras.pedidos.controller.dto.NovoPedidoDTO;
 import io.github.eduardoconceicao90.icompras.pedidos.controller.mapper.PedidoMapper;
 import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ErrorResponse;
@@ -28,6 +29,20 @@ public class PedidoController {
         } catch (ValidationException e) {
             var errorResponse = new ErrorResponse("Erro de validação", e.getField(), e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
+    @PostMapping("/pagamentos")
+    public ResponseEntity<Object> adicionarNovoPagamento(@RequestBody AdicaoNovoPagamentoDTO adicaoNovoPagamentoDTO) {
+        try{
+            service.adicionarNovoPagamento(
+                    adicaoNovoPagamentoDTO.codigoPedido(),
+                    adicaoNovoPagamentoDTO.dados(),
+                    adicaoNovoPagamentoDTO.tipoPagamento()
+            );
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+
         }
     }
 
