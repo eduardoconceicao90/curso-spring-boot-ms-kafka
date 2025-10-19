@@ -6,13 +6,12 @@ import io.github.eduardoconceicao90.icompras.pedidos.controller.mapper.PedidoMap
 import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ErrorResponse;
 import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ItemNaoEncontradoException;
 import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ValidationException;
+import io.github.eduardoconceicao90.icompras.pedidos.publisher.mapper.DetalhePedidoMapper;
+import io.github.eduardoconceicao90.icompras.pedidos.publisher.representation.DetalhePedidoRepresentation;
 import io.github.eduardoconceicao90.icompras.pedidos.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,6 +20,7 @@ public class PedidoController {
 
     private final PedidoService service;
     private final PedidoMapper mapper;
+    private final DetalhePedidoMapper detalhePedidoMapper;
 
     @PostMapping
     public ResponseEntity<Object> criar(@RequestBody NovoPedidoDTO novoPedidoDto) {
@@ -33,7 +33,7 @@ public class PedidoController {
         }
     }
 
-    @PostMapping("/pagamentos")
+    @PostMapping("pagamentos")
     public ResponseEntity<Object> adicionarNovoPagamento(@RequestBody AdicaoNovoPagamentoDTO adicaoNovoPagamentoDTO) {
         try{
             service.adicionarNovoPagamento(
@@ -46,6 +46,15 @@ public class PedidoController {
             var errorResponse = new ErrorResponse("Pedido não encontrado", "codigoPedido", e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);
         }
+    }
+
+    @GetMapping("{codigo}")
+    public ResponseEntity<DetalhePedidoRepresentation> obterDetalhesPedido(@PathVariable Long codigo) {
+        return service
+                .carregarDadosCompletosPedido(codigo)
+                .map(detalhePedidoMapper::toDetalhePedidoRepresentation)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }
