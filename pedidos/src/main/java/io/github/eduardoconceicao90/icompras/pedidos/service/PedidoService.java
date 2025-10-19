@@ -9,6 +9,7 @@ import io.github.eduardoconceicao90.icompras.pedidos.model.Pedido;
 import io.github.eduardoconceicao90.icompras.pedidos.model.enums.StatusPedido;
 import io.github.eduardoconceicao90.icompras.pedidos.model.enums.TipoPagamento;
 import io.github.eduardoconceicao90.icompras.pedidos.model.exception.ItemNaoEncontradoException;
+import io.github.eduardoconceicao90.icompras.pedidos.publisher.PagamentoPublisher;
 import io.github.eduardoconceicao90.icompras.pedidos.repository.ItemPedidoRepository;
 import io.github.eduardoconceicao90.icompras.pedidos.repository.PedidoRepository;
 import io.github.eduardoconceicao90.icompras.pedidos.validator.PedidoValidator;
@@ -31,6 +32,7 @@ public class PedidoService {
     private final ServiceBancarioClient serviceBancarioClient;
     private final ClientesClient clientesClient;
     private final ProdutosClient produtosClient;
+    private final PagamentoPublisher pagamentoPublisher;
 
     @Transactional
     public Pedido criar(Pedido pedido) {
@@ -63,9 +65,10 @@ public class PedidoService {
             Pedido pedido = pedidoEncontrado.get();
 
             if(sucesso){
+                carregarDadosCompletosPedido(pedido.getCodigo());
                 pedido.setStatus(StatusPedido.PAGO);
                 pedido.setObservacoes(null);
-                log.info("Pedido {} pago com sucesso.", pedido.getCodigo());
+                pagamentoPublisher.publicar(pedido);
             } else {
                 pedido.setStatus(StatusPedido.ERRO_PAGAMENTO);
                 pedido.setObservacoes(observacoes);
