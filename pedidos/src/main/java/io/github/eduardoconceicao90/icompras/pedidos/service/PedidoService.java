@@ -1,7 +1,10 @@
 package io.github.eduardoconceicao90.icompras.pedidos.service;
 
+import io.github.eduardoconceicao90.icompras.pedidos.client.ClientesClient;
+import io.github.eduardoconceicao90.icompras.pedidos.client.ProdutosClient;
 import io.github.eduardoconceicao90.icompras.pedidos.client.ServiceBancarioClient;
 import io.github.eduardoconceicao90.icompras.pedidos.model.DadosPagamento;
+import io.github.eduardoconceicao90.icompras.pedidos.model.ItemPedido;
 import io.github.eduardoconceicao90.icompras.pedidos.model.Pedido;
 import io.github.eduardoconceicao90.icompras.pedidos.model.enums.StatusPedido;
 import io.github.eduardoconceicao90.icompras.pedidos.model.enums.TipoPagamento;
@@ -14,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -23,6 +29,8 @@ public class PedidoService {
     private final ItemPedidoRepository itemPedidoRepository;
     private final PedidoValidator validator;
     private final ServiceBancarioClient serviceBancarioClient;
+    private final ClientesClient clientesClient;
+    private final ProdutosClient produtosClient;
 
     @Transactional
     public Pedido criar(Pedido pedido) {
@@ -89,6 +97,31 @@ public class PedidoService {
 
             repository.save(pedido);
         }
+    }
+
+    public Optional<Pedido> carregarDadosCompletosPedido(Long codigo) {
+        Optional<Pedido> pedido = repository.findById(codigo);
+        pedido.ifPresent(this::carregarDadosCliente);
+        pedido.ifPresent(this::carregarItensPedido);
+        return pedido;
+    }
+
+    private void carregarDadosCliente(Pedido pedido) {
+        Long codigoCliente = pedido.getCodigoCliente();
+        var dadosCliente = clientesClient.obterPorCodigo(codigoCliente).getBody();
+        pedido.setDadosCliente(dadosCliente);
+    }
+
+    private void carregarItensPedido(Pedido pedido) {
+       List<ItemPedido> itens = itemPedidoRepository.findByPedido(pedido);
+       pedido.setItens(itens);
+       pedido.getItens().forEach(this::carregarDadosProduto);
+    }
+
+    private void carregarDadosProduto(ItemPedido item) {
+        Long codigoProduto = item.getCodigoProduto();
+        var dadosProduto = produtosClient.obterPorCodigo(codigoProduto);
+        item.setNome(dadosProduto.getBody().nome());
     }
 
 }
