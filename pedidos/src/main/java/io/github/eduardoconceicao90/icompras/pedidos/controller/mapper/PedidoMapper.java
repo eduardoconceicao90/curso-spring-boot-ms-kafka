@@ -16,11 +16,14 @@ import static org.mapstruct.factory.Mappers.getMapper;
 @Mapper(componentModel = "spring")
 public interface PedidoMapper {
 
+    // Instância do ItemPedidoMapper para reutilização
     ItemPedidoMapper ITEM_PEDIDO_MAPPER = getMapper(ItemPedidoMapper.class);
 
+    // Mapeia NovoPedidoDTO para Pedido, utilizando o método mapItens para a lista de itens
     @Mapping(source = "itens", target = "itens", qualifiedByName = "mapItens")
     Pedido toPedido(NovoPedidoDTO novoPedidoDto);
 
+    // Mapeia a lista de ItemPedidoDTO para uma lista de ItemPedido usando o ItemPedidoMapper
     @Named("mapItens")
     default List<ItemPedido> mapItens(List<ItemPedidoDTO> itensDto) {
         return itensDto.stream()
@@ -28,6 +31,7 @@ public interface PedidoMapper {
                 .toList();
     }
 
+    // Método executado após o mapeamento para ajustar campos adicionais
     @AfterMapping
     default void afterMapping(@MappingTarget Pedido pedido) {
         pedido.setStatus(StatusPedido.REALIZADO);

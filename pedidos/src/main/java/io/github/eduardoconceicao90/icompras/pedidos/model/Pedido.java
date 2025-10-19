@@ -1,5 +1,6 @@
 package io.github.eduardoconceicao90.icompras.pedidos.model;
 
+import io.github.eduardoconceicao90.icompras.pedidos.client.representation.ClienteRepresentation;
 import io.github.eduardoconceicao90.icompras.pedidos.model.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -49,5 +50,8 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ItemPedido> itens;
+
+    @Transient
+    private ClienteRepresentation dadosCliente;
 
 }
