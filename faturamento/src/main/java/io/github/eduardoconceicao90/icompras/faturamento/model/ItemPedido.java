@@ -1,0 +1,16 @@
+package io.github.eduardoconceicao90.icompras.faturamento.model;
+
+import java.math.BigDecimal;
+
+public record ItemPedido(
+        Long codigo,
+        String descricao,
+        BigDecimal valorUnitario,
+        Integer quantidade
+) {
+
+    public BigDecimal getTotal() {
+        return valorUnitario.multiply(BigDecimal.valueOf(quantidade));
+    }
+
+}
