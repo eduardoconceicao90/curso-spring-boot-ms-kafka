@@ -6,11 +6,7 @@ public record ItemPedido(
         Long codigo,
         String descricao,
         BigDecimal valorUnitario,
-        Integer quantidade
+        Integer quantidade,
+        BigDecimal total
 ) {
-
-    public BigDecimal getTotal() {
-        return valorUnitario.multiply(BigDecimal.valueOf(quantidade));
-    }
-
 }

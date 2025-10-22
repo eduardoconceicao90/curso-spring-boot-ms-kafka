@@ -25,6 +25,9 @@ public class SpringConfig {
         // Configura para não falhar em propriedades desconhecidas na desserialização
         mapper.configure(DeserializationFeature.FAIL_ON_UNEXPECTED_VIEW_PROPERTIES, false);
 
+        // Configura para não falhar em propriedades desconhecidas na desserialização
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         return mapper;
     }
 

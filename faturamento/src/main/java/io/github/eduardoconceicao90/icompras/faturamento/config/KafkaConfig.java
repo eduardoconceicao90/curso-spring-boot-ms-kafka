@@ -1,7 +1,6 @@
 package io.github.eduardoconceicao90.icompras.faturamento.config;
 
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -18,9 +17,6 @@ import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_
 @EnableKafka
 @Configuration
 public class KafkaConfig {
-
-    @Value("${icompras.config.kafka.server-url}")
-    private String kafkaServerUrl;
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory(){
