@@ -3,6 +3,7 @@ package io.github.eduardoconceicao90.icompras.faturamento.service;
 import io.github.eduardoconceicao90.icompras.faturamento.bucket.BucketFile;
 import io.github.eduardoconceicao90.icompras.faturamento.bucket.BucketService;
 import io.github.eduardoconceicao90.icompras.faturamento.model.Pedido;
+import io.github.eduardoconceicao90.icompras.faturamento.publisher.FaturamentoPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
@@ -29,6 +30,7 @@ public class GeradorNotaFiscalService {
     private Resource logo;
 
     private final BucketService bucketService;
+    private final FaturamentoPublisher publisher;
 
     public void gerarNotaFiscal(Pedido pedido){
         log.info("Gerando nota fiscal para o pedido {} ", pedido.codigo());
@@ -45,6 +47,10 @@ public class GeradorNotaFiscalService {
             );
 
             bucketService.upload(file);
+
+            String url = bucketService.getUrl(nomeArquivo);
+            publisher.publicar(pedido, url);
+
             log.info("Gerada nota fiscal, nome do arquivo: {}", nomeArquivo);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
