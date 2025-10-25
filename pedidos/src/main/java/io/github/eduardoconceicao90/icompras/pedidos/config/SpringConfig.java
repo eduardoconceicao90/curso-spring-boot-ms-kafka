@@ -22,8 +22,11 @@ public class SpringConfig {
         // Configura para ignorar propriedades nulas na serialização
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        // Configura para não falhar em propriedades desconhecidas na desserialização
+        // Impede falhas ao desserializar propriedades inesperadas em diferentes "views" do Jackson
         mapper.configure(DeserializationFeature.FAIL_ON_UNEXPECTED_VIEW_PROPERTIES, false);
+
+        // Impede falhas ao desserializar quando o JSON contém propriedades desconhecidas
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         return mapper;
     }
