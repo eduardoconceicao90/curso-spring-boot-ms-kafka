@@ -1,30 +1,58 @@
 package io.github.eduardoconceicao90.icompras.faturamento.service;
 
+import io.github.eduardoconceicao90.icompras.faturamento.bucket.BucketFile;
+import io.github.eduardoconceicao90.icompras.faturamento.bucket.BucketService;
 import io.github.eduardoconceicao90.icompras.faturamento.model.Pedido;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class GeradorNotaFiscalService {
 
-    @Value("${classpath:reports/nota-fiscal.jrxml}")
+    @Value("classpath:reports/nota-fiscal.jrxml")
     private Resource notaFiscal;
 
-    @Value("${classpath:reports/logo.png}")
+    @Value("classpath:reports/logo.png")
     private Resource logo;
 
-    public byte[] gerarNotaFiscal(Pedido pedido){
-        try (InputStream inputStream = notaFiscal.getInputStream()) {
+    private final BucketService bucketService;
 
+    public void gerarNotaFiscal(Pedido pedido){
+        log.info("Gerando nota fiscal para o pedido {} ", pedido.codigo());
+
+        try {
+            byte[] byteArray = gerarReportNotaFiscal(pedido);
+            String nomeArquivo = String.format("nota_fiscal_pedido_%d.pdf", pedido.codigo());
+
+            var file = new BucketFile(
+                    nomeArquivo,
+                    new ByteArrayInputStream(byteArray),
+                    MediaType.APPLICATION_PDF,
+                    byteArray.length
+            );
+
+            bucketService.upload(file);
+            log.info("Gerada nota fiscal, nome do arquivo: {}", nomeArquivo);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    public byte[] gerarReportNotaFiscal(Pedido pedido){
+        try (InputStream inputStream = notaFiscal.getInputStream()) {
             Map<String, Object> params = new HashMap<>();
 
             params.put("NOME", pedido.cliente().nome());
@@ -36,6 +64,7 @@ public class GeradorNotaFiscalService {
             params.put("TELEFONE", pedido.cliente().telefone());
             params.put("DATA_PEDIDO", pedido.data());
             params.put("TOTAL_PEDIDO", pedido.total());
+            params.put("LOGO", logo.getFile().getAbsolutePath());
 
             var dataSource = new JRBeanCollectionDataSource(pedido.itens());
 
@@ -43,7 +72,6 @@ public class GeradorNotaFiscalService {
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
 
             return JasperExportManager.exportReportToPdf(jasperPrint);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

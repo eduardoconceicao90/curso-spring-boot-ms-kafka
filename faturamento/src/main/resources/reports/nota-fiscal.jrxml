@@ -413,14 +413,14 @@
 				<reportElement x="0" y="0" width="80" height="20" uuid="4c5bb119-c108-4c8f-b491-97035dce5506">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5a5d24c3-dd8d-4b8f-a544-e0c818e49fab"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="80" y="0" width="240" height="20" uuid="f2be8b90-af8c-456c-8063-ed057da48aa0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e643dce1-666e-44a1-a582-eec69c93c59c"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -435,14 +435,14 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="405bc560-27d7-4457-8c44-2480e5078093"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{valorUnitario}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤#,##0.##;¤-#,##0.##">
 				<reportElement x="480" y="0" width="74" height="20" uuid="7edcc78b-20fd-477f-8d95-8f4f567eec30">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e44646b2-aafb-47cc-9b86-f0e0901c6207"/>
 				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -459,7 +459,7 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -473,7 +473,7 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 					<paragraph rightIndent="4"/>
 				</textElement>
