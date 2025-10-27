@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="servicos" />
+        <module name="logistica" />
       </profile>
       <profile name="Annotation profile for pedidos" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -19,11 +20,9 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.0/mapstruct-1.6.0.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
-        <module name="clientes" />
-        <module name="produtos" />
         <module name="pedidos" />
       </profile>
-      <profile name="Annotation profile for faturamento" enabled="true">
+      <profile name="Annotation profile for produtos" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -31,6 +30,8 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="faturamento" />
+        <module name="clientes" />
+        <module name="produtos" />
       </profile>
     </annotationProcessing>
   </component>
@@ -38,6 +39,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clientes" options="-parameters" />
       <module name="faturamento" options="-parameters" />
+      <module name="logistica" options="-parameters" />
       <module name="pedidos" options="-parameters" />
       <module name="produtos" options="-parameters" />
       <module name="servicos" options="-parameters" />
