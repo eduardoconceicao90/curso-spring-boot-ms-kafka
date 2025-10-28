@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="servicos" />
-        <module name="logistica" />
       </profile>
       <profile name="Annotation profile for pedidos" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -22,13 +21,14 @@
         </processorPath>
         <module name="pedidos" />
       </profile>
-      <profile name="Annotation profile for produtos" enabled="true">
+      <profile name="Annotation profile for logistica" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
+        <module name="logistica" />
         <module name="faturamento" />
         <module name="clientes" />
         <module name="produtos" />

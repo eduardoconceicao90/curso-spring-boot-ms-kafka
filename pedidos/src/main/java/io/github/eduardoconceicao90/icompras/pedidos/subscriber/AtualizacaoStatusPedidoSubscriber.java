@@ -16,9 +16,13 @@ public class AtualizacaoStatusPedidoSubscriber {
     private final AtualizacaoStatusPedidoService service;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(groupId = "${spring.kafka.consumer.group-id}", topics = {
-        "${icompras.config.kafka.topics.pedidos-faturados}", "${icompras.config.kafka.topics.pedidos-enviados}"
-    })
+    @KafkaListener(
+            groupId = "${spring.kafka.consumer.group-id}",
+            topics = {
+                    "${icompras.config.kafka.topics.pedidos-faturados}",
+                    "${icompras.config.kafka.topics.pedidos-enviados}"
+            }
+    )
     public void receberAtualizacao(String json){
         try {
             log.info("Recebendo atualização de status: {}", json);

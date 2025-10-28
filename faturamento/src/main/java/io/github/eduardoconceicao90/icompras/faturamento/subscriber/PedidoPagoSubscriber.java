@@ -19,7 +19,10 @@ public class PedidoPagoSubscriber {
     private final ObjectMapper objectMapper;
     private final GeradorNotaFiscalService service;
 
-    @KafkaListener(groupId = "icompras-faturamento", topics = "${icompras.config.kafka.topics.pedidos-pagos}")
+    @KafkaListener(
+            groupId = "${spring.kafka.consumer.group-id}",
+            topics = "${icompras.config.kafka.topics.pedidos-pagos}"
+    )
     public void listener(String json){
         try {
             log.info("Recebendo pedido para faturamento: {}", json);
