@@ -14,11 +14,17 @@ public class ClienteService {
     private final ClienteRepository repository;
 
     public Cliente salvar(Cliente cliente) {
+        cliente.setAtivo(true);
         return repository.save(cliente);
     }
 
     public Optional<Cliente> obterPorCodigo(Long codigo) {
         return repository.findById(codigo);
+    }
+
+    public void deletar(Cliente cliente) {
+        cliente.setAtivo(false);
+        repository.save(cliente);
     }
 
 }
