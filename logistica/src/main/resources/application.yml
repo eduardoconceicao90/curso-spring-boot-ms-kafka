@@ -7,6 +7,9 @@ spring:
       group-id: icompras-logistica
       auto-offset-reset: earliest
 
+server:
+  port: 8084
+
 icompras:
   config:
     kafka:

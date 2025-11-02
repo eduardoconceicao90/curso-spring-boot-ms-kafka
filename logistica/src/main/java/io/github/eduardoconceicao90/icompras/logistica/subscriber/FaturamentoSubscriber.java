@@ -24,7 +24,7 @@ public class FaturamentoSubscriber {
         try {
             log.info("Recebendo pedido para envio: {}", json);
             var representation = objectMapper.readValue(json, AtualizacaoFaturamentoRepresentation.class);
-            service.enviar(representation.codigo(), representation.urlNotaFiscal());
+            service.enviar(representation.codigo());
             log.info("Pedido processado com sucesso! Código: {}", representation.codigo());
         } catch (Exception e) {
             log.error("Erro ao preparar pedido para envio", e);

@@ -14,7 +14,7 @@ public class EnvioPedidoService {
 
     private final EnvioPedidoPublisher publisher;
 
-    public void enviar(Long codigoPedido, String urlNotaFiscal){
+    public void enviar(Long codigoPedido){
         var codigoRastreio = gerarCodigoRastreio();
         var atualizacaoRepresentation = new AtualizacaoEnvioPedido(codigoPedido, StatusPedido.ENVIADO, codigoRastreio);
         publisher.enviar(atualizacaoRepresentation);

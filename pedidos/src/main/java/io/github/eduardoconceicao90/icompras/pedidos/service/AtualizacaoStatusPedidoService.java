@@ -15,9 +15,9 @@ public class AtualizacaoStatusPedidoService {
     @Transactional
     public void atualizarStatus(Long codigo, StatusPedido status, String urlNotaFiscal, String rastreio){
         repository.findById(codigo).ifPresent(pedido -> {
-            pedido.setStatus(status);
-            pedido.setUrlNotaFiscal(urlNotaFiscal);
-            pedido.setCodigoRastreio(rastreio);
+            pedido.setStatus(status != null ? status : pedido.getStatus());
+            pedido.setUrlNotaFiscal(urlNotaFiscal != null ? urlNotaFiscal : pedido.getUrlNotaFiscal());
+            pedido.setCodigoRastreio(rastreio != null ? rastreio : pedido.getCodigoRastreio());
         });
     }
 
