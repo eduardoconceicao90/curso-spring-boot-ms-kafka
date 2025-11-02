@@ -28,6 +28,7 @@ public class PedidoValidator {
         try {
             var response = clientesClient.obterPorCodigo(codigoCliente).getBody();
             log.info("Cliente com código {} encontrado: {}", response.codigo(), response.nome());
+           if(!response.ativo()) throw new ValidationException("codigoCliente", "Cliente inativo");
         } catch (FeignException.NotFound e) {
             var message = String.format("Cliente com código %d não encontrado", codigoCliente);
             throw new ValidationException("codigoCliente", message);
@@ -38,6 +39,7 @@ public class PedidoValidator {
         try {
             var response = produtosClient.obterPorCodigo(itemPedido.getCodigoProduto()).getBody();
             log.info("Produto com código {} encontrado: {}", response.codigo(), response.nome());
+            if(!response.ativo()) throw new ValidationException("codigoProduto", "Produto inativo");
         } catch (FeignException.NotFound e) {
             var message = String.format("Produto com código %d não encontrado", itemPedido.getCodigoProduto());
             throw new ValidationException("codigoProduto", message);
