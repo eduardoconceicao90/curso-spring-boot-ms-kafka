@@ -4,34 +4,32 @@ Este projeto apresenta uma implementação completa e prática de uma **arquitet
 
 ---
 
-## 🚀 Funcionalidades e Conceitos Principais
-
 ### 🧱 Arquitetura de Microservices
-Entenda os fundamentos dessa abordagem moderna, suas vantagens em termos de **escalabilidade** e **independência de serviços**, além dos **desafios de comunicação e monitoramento** em comparação ao modelo monolítico.
+Desenvolvimento de uma arquitetura independente e modular, com serviços que se comunicam entre si de forma assíncrona e desacoplada. Cada microserviço possui seu próprio banco de dados, aplicando o princípio de isolamento e autonomia.
 
 ### 🌱 Spring Boot
-Aprenda a criar **microservices independentes, leves e escaláveis**, preparados para rodar em **ambientes de produção**, aproveitando ao máximo o ecossistema do **Spring Framework**.
+Construção de microservices leves, escaláveis e de fácil manutenção, explorando o poder do Spring Framework e suas integrações nativas.
 
 ### ⚡ Apache Kafka
-Explore o **Kafka em profundidade**, com foco em **publicação e consumo de eventos**, **configuração de tópicos**, **partições**, **balanceamento** e **comunicação assíncrona** entre serviços distribuídos.
+Implementação de comunicação orientada a eventos, com tópicos e partições para lidar com altos volumes de mensagens e garantir resiliência entre os serviços.
 
 ### 🐳 Docker
-Utilize o **Docker** para subir e orquestrar **serviços externos** da arquitetura, simulando um ambiente real utilizado por **grandes empresas**.
+Containerização completa do ambiente, garantindo que todos os serviços (Kafka, MinIO, APIs, etc.) rodem de forma padronizada e reproduzível.
 
 ### 🗄️ Bancos de Dados Independentes
-Pratique a abordagem de **bancos separados por microserviço**, aplicando o princípio de **isolamento** e garantindo **consistência e flexibilidade** na arquitetura distribuída.
+Cada serviço mantém seu próprio banco, reforçando isolamento, escalabilidade e segurança dos dados, conforme as melhores práticas de Domain-Driven Design (DDD).
 
 ### 🔄 Event-Driven Architecture
-Implemente **fluxos orientados a eventos**, aplicando **padrões utilizados em sistemas distribuídos** e altamente escaláveis.
+Arquitetura orientada a eventos para permitir comunicação fluida entre serviços, sem acoplamento direto.
 
 ### 🌐 Webhooks
-Aprenda a **integrar eventos externos** e realizar **comunicação entre sistemas** por meio de **chamadas HTTP automáticas e seguras**.
+Criação de integrações automáticas via HTTP, simulando comunicações entre APIs e sistemas externos.
 
 ### ☁️ Cloud Buckets com MinIO
-Armazene, recupere e gerencie arquivos em um ambiente **compatível com Amazon S3**, essencial em arquiteturas que lidam com **grandes volumes de dados**.
+Armazenamento e recuperação de arquivos utilizando o MinIO, uma alternativa open source ao Amazon S3, garantindo flexibilidade e integração com a nuvem.
 
 ### 📊 Jasper Reports
-Desenvolva **relatórios dinâmicos e profissionais**, integrando-os aos microservices para **entregar soluções completas** ao usuário final.
+Geração de relatórios dinâmicos e profissionais, integrados diretamente aos microservices — uma solução completa para demandas empresariais.
 
 ---
 
